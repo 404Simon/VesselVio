@@ -434,7 +434,7 @@ class VisualizationDialog(QDialog):
     # Visualization thread connections
     def update_progress(self, update):
         self.progressBarText.setText(f"<center>{update[0]}")
-        self.progressBar.setValue(update[1])
+        self.progressBar.setValue(int(update[1]))
         if self.files.annotation_type != "None" and len(update) == 3:
             self.processedEdit.setText(update[2])
         return
@@ -1970,7 +1970,6 @@ class TubeOptions(QWidget):
         actors = [self.actors.vessels, self.actors.vessel_caps]
         for actor in actors:
             mapper = actor.GetMapper()
-            mapper.cmap = colormap
             table = mapper.GetLookupTable()
             table.SetTable(pv._vtk.numpy_to_vtk(colortable))
         return
