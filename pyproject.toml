@@ -1,0 +1,22 @@
+[project]
+name = "vesselvio"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "geomdl>=5.4.0",
+    "igraph>=1.0.0",
+    "imageio-ffmpeg>=0.6.0",
+    "mcubes>=0.1.6",
+    "nibabel>=5.4.2",
+    "numba>=0.65.0",
+    "opencv-python>=4.13.0.92",
+    "openpyxl>=3.1.5",
+    "pandas>=3.0.3",
+    "pyexcelerate>=0.13.0",
+    "pyqt5>=5.15.11",
+    "pyvista>=0.48.2",
+    "pyvistaqt>=0.11.4",
+    "scikit-image>=0.26.0",
+]
