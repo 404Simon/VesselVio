@@ -73,7 +73,7 @@ class mainWindow(QMainWindow):
         ImProc.clear_labeled_cache()
 
         # Run our tiny file to prep our numba jit compilers.
-        QtTh.prepare_compilers()
+        QTimer.singleShot(100, QtTh.prepare_compilers)
 
         # Check for updates
         update_alert.local_version = __version__[2:]
