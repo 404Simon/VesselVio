@@ -783,7 +783,7 @@ class LoadingDialog(QDialog):
         return
 
     def load_annotation_file(self):
-        loaded_file = helpers.load_JSON(helpers.get_dir("Desktop"))
+        loaded_file = helpers.load_JSON()
 
         if loaded_file:
             with open(loaded_file) as f:

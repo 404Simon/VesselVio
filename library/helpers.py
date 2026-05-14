@@ -126,11 +126,12 @@ def load_results_dir():
 def set_results_dir():
     # Get selected results directory
     results_dir = QFileDialog.getExistingDirectory(
-        QFileDialog(), "Select Results Folder", get_dir("Desktop")
+        QFileDialog(), "Select Results Folder", get_starting_dir()
     )
     results_dir = std_path(results_dir)
     # Update our stored results folder location.
     if results_dir:
+        save_starting_dir(results_dir)
         update_results_cache(results_dir)
     return results_dir
 
@@ -139,10 +140,11 @@ def load_volumes():
     message = "Load volume files"
     file_filter = "Images (*.nii *.png *.bmp *.tif *.tiff *.jpg *.jpeg)"
     files = QFileDialog.getOpenFileNames(
-        QFileDialog(), message, get_dir("Desktop"), file_filter
+        QFileDialog(), message, get_starting_dir(), file_filter
     )[0]
     if files:
         files = [std_path(file) for file in files]
+        save_starting_dir(files[0])
     return files
 
 
@@ -150,10 +152,11 @@ def load_graphs(graph_format):
     message = f"Load {graph_format} files"
     file_filter = f"{graph_format} (*.{graph_format})"
     files = QFileDialog.getOpenFileNames(
-        QFileDialog(), message, get_dir("Desktop"), file_filter
+        QFileDialog(), message, get_starting_dir(), file_filter
     )[0]
     if files:
         files = [std_path(file) for file in files]
+        save_starting_dir(files[0])
     return files
 
 
@@ -161,10 +164,11 @@ def load_volume():
     message = "Load volume file"
     file_filter = "Images (*.nii *.png *.bmp *.tif *.tiff *.jpg *.jpeg)"
     file = QFileDialog.getOpenFileName(
-        QFileDialog(), message, get_dir("Desktop"), file_filter
+        QFileDialog(), message, get_starting_dir(), file_filter
     )[0]
     if file:
         file = std_path(file)
+        save_starting_dir(file)
     return file
 
 
@@ -172,8 +176,10 @@ def load_graph(graph_format):
     message = f"Load {graph_format} file"
     file_filter = f"{graph_format} (*.{graph_format})"
     files = QFileDialog.getOpenFileName(
-        QFileDialog(), message, get_dir("Desktop"), file_filter
+        QFileDialog(), message, get_starting_dir(), file_filter
     )
+    if files[0]:
+        save_starting_dir(files[0])
     return files[0]
 
 
@@ -181,20 +187,22 @@ def load_nii_annotation():
     message = "Load '.nii' file"
     file_filter = "nii (*.nii)"
     file = QFileDialog.getOpenFileName(
-        QFileDialog(), message, get_dir("Desktop"), file_filter
+        QFileDialog(), message, get_starting_dir(), file_filter
     )[0]
     if file:
         file = std_path(file)
+        save_starting_dir(file)
     return file
 
 
 def load_RGB_folder():
     message = "Select RGB annotation folder"
     folder = QFileDialog.getExistingDirectory(
-        QFileDialog(), message, get_dir("Desktop")
+        QFileDialog(), message, get_starting_dir()
     )
     if folder:
         folder = std_path(folder)
+        save_starting_dir(folder)
     return folder
 
 
@@ -208,15 +216,32 @@ def get_save_file(message, directory, format):
     return file_name
 
 
-def load_JSON(directory):
+def load_JSON():
     message = "Select JSON Tree File"
     file_filter = "json (*.json)"
     loaded_file = QFileDialog.getOpenFileName(
-        QFileDialog(), message, directory, file_filter
+        QFileDialog(), message, get_starting_dir(), file_filter
     )[0]
     if loaded_file:
         loaded_file = std_path(loaded_file)
+        save_starting_dir(loaded_file)
     return loaded_file
+
+
+def get_starting_dir():
+    try:
+        return load_prefs()["last_path"]
+    except (KeyError, FileNotFoundError):
+        return load_results_dir()
+
+
+def save_starting_dir(path):
+    prefs = load_prefs()
+    path = std_path(path)
+    if os.path.isfile(path):
+        path = os.path.dirname(path)
+    prefs["last_path"] = path
+    save_prefs(prefs)
 
 
 ## cache path loading

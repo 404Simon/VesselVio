@@ -553,7 +553,7 @@ class LoadTreeFile(QDialog):
         return
 
     def load_json_file(self):
-        loaded_file = helpers.load_JSON(helpers.get_dir("Desktop"))
+        loaded_file = helpers.load_JSON()
         if loaded_file:
             self.file_name = loaded_file
             self.accept()
