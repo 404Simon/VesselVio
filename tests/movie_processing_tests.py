@@ -1,7 +1,3 @@
-import sys
-
-sys.path.insert(1, "/Users/jacobbumgarner/Documents/GitHub/VesselVio")
-
 import numpy as np
 import pyvista as pv
 

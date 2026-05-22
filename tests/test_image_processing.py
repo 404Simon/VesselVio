@@ -1,10 +1,6 @@
 import os
-import sys
 
 import pytest
-
-sys.path.insert(1, "/Users/jacobbumgarner/Documents/GitHub/VesselVio")
-
 
 import numpy as np
 from library import image_processing
