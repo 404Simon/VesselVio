@@ -4,8 +4,8 @@ import pytest
 
 import numpy as np
 
+from library import image_processing as ImProc
 from library.annotation import segmentation
-from skimage.io import imread
 
 
 THIS_PATH = os.path.realpath(__file__)
@@ -22,7 +22,7 @@ segmentation_data = [
 
 @pytest.mark.parametrize("minima, maxima, seg_id, roi_volume", segmentation_data)
 def test_segement_roi(minima, maxima, seg_id, roi_volume):
-    labeled_volume = imread(os.path.join(ANNOTATION_DIR, "test_labeled.nii"))
+    labeled_volume = ImProc.load_nii_volume(os.path.join(ANNOTATION_DIR, "test_labeled.nii"))
 
     minima = np.asarray(minima)
     maxima = np.asarray(maxima)

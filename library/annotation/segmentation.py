@@ -13,7 +13,6 @@ import numpy as np
 
 from library import image_processing as ImProc
 from numba import njit, prange
-from skimage.io import imread
 
 
 @njit(parallel=True, nogil=True, cache=True)
@@ -99,7 +98,7 @@ def roi_segmentation_input(
     if not labeled_volume_fname:
         labeled_volume = ImProc.load_labeled_volume_cache()
     else:
-        labeled_volume = imread(labeled_volume_fname)
+        labeled_volume = ImProc.load_nii_volume(labeled_volume_fname)
 
     volume = segment_roi(labeled_volume, minima, maxima, segmentation_id)
     del labeled_volume

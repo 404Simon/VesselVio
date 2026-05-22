@@ -6,7 +6,6 @@ import numpy as np
 
 from library import image_processing as ImProc
 from library.annotation import labeling, segmentation_prep
-from skimage.io import imread
 
 
 THIS_PATH = os.path.realpath(__file__)
@@ -14,7 +13,7 @@ FIXTURE_DIR = os.path.join(os.path.dirname(THIS_PATH), "test_files")
 ANNOTATION_DIR = os.path.join(FIXTURE_DIR, "annotation_data")
 
 
-labeled_volume = imread(os.path.join(ANNOTATION_DIR, "test_labeled.nii"))
+labeled_volume = ImProc.load_nii_volume(os.path.join(ANNOTATION_DIR, "test_labeled.nii"))
 VOLUME = (labeled_volume > 0).astype(np.uint8)
 
 
