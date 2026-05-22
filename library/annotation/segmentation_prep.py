@@ -124,8 +124,12 @@ def prep_roi_array(roi_array: np.ndarray) -> typing.Tuple[dict, set]:
                 break  # Break if we're at the end of the ids
             id_dict[roi_array[n, roi_id]] = n
 
-    id_keys = set(roi_array.flatten())
-    id_keys.remove(0)
+    flat_vals = roi_array.ravel()
+    id_keys = set()
+    for i in range(flat_vals.size):
+        val = flat_vals[i]
+        if val != 0:
+            id_keys.add(val)
     return id_dict, id_keys
 
 
